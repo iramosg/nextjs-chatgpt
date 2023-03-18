@@ -20,8 +20,8 @@ export default function NewPost() {
       }),
     })
     const json = await response.json()
-    console.log(json.post.postContent)
-    setPost(json.post.postContent)
+    console.log(json.data.postContent)
+    setPost(json.data.postContent)
   }
 
   return (
