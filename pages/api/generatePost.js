@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     model: 'text-davinci-003',
     temperature: 0,
     max_tokens: 3600,
-    prompt: 'Generate a bçpog post owning dogs',
+    prompt: 'Generate a blog post owning dogs',
   })
 
   console.log('response:', response)
