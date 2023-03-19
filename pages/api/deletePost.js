@@ -18,12 +18,12 @@ export default withApiAuthRequired(async function handler(req, res) {
       _id: new ObjectId(postId),
     })
 
-    if (post.userId !== userProfile._id) {
-      res
-        .status(403)
-        .json({ error: 'You are not authorized to delete this post.' })
-      return
-    }
+    // if (post.userId !== userProfile._id) {
+    //   res
+    //     .status(403)
+    //     .json({ error: 'You are not authorized to delete this post.' })
+    //   return
+    // }
 
     await db.collection('posts').deleteOne({
       userId: userProfile._id,
