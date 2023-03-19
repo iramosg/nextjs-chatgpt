@@ -6,12 +6,15 @@ import clientPromise from '../../lib/mongodb'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 import { getAppProps } from '../../utils/getAppProps'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
+import PostsContext from '../../context/postsContext'
 
 export default function Post(props) {
   const router = useRouter()
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const { deletePost } = useContext(PostsContext)
+
   const handleDeleteConfirm = async () => {
     try {
       const response = await fetch(`/api/deletePost`, {
@@ -24,6 +27,7 @@ export default function Post(props) {
 
       const json = await response.json()
       if (json.success) {
+        deletePost(props.id)
         router.push('/post/new')
       }
     } catch (e) {
