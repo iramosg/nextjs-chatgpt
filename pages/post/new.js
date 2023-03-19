@@ -58,6 +58,7 @@ export default function NewPost() {
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm"
+                  maxLength={80}
                 />
               </label>
             </div>
@@ -69,12 +70,18 @@ export default function NewPost() {
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
                 className="resize-none border border-slate-500 w-full block my-2 px-4 py-2 rounded-sm"
+                maxLength={80}
               />
               <small className="block mb-2">
                 Separate keyworkds with commas. For example: "react, nextjs"
               </small>
             </div>
-            <button className="btn">Generate</button>
+            <button
+              className="btn"
+              disabled={!topic.trim() || !keywords.trim()}
+            >
+              Generate
+            </button>
           </form>
         </div>
       )}
@@ -89,6 +96,16 @@ NewPost.getLayout = function getLayout(page, pageProps) {
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx) {
     const props = await getAppProps(ctx)
+
+    if (!props.avaliableTokens) {
+      return {
+        redirect: {
+          destination: '/token-pop-up',
+          permanent: false,
+        },
+      }
+    }
+
     return {
       props,
     }

@@ -25,6 +25,20 @@ export default withApiAuthRequired(async function handler(req, res) {
 
   const { topic, keywords } = req.body
 
+  if (!topic || !keywords) {
+    res.status(422).json({
+      error: 'You must provide a topic and keywords.',
+    })
+    return
+  }
+
+  if (topic.length > 80 || keywords.length > 80) {
+    res.status(422).json({
+      error: 'The topic and keywords must be less than 80 characters.',
+    })
+    return
+  }
+
   const response = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     max_tokens: 3600,
