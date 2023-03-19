@@ -97,7 +97,7 @@ export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx) {
     const props = await getAppProps(ctx)
 
-    if (!props.avaliableTokens) {
+    if (!props.availableTokens) {
       return {
         redirect: {
           destination: '/token-pop-up',

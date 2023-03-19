@@ -11,7 +11,7 @@ export default withApiAuthRequired(async function handler(req, res) {
     auth0Id: user.sub,
   })
 
-  if (!userProfile?.avaliableTokens) {
+  if (!userProfile?.availableTokens) {
     res.status(403).json({
       error: 'You do not have enough tokens to generate a post.',
     })
@@ -71,7 +71,7 @@ export default withApiAuthRequired(async function handler(req, res) {
     },
     {
       $inc: {
-        avaliableTokens: -1,
+        availableTokens: -1,
       },
     }
   )

@@ -43,7 +43,7 @@ const handler = async (req, res) => {
           },
           {
             $inc: {
-              avaliableTokens: 10,
+              availableTokens: 10,
             },
             $setOnInsert: {
               auth0Id,
