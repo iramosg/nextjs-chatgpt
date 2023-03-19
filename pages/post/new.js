@@ -19,8 +19,8 @@ export default function NewPost() {
         keywords,
       }),
     })
+
     const json = await response.json()
-    console.log(json.data.postContent)
     setPost(json.data.postContent)
   }
 
