@@ -12,6 +12,7 @@ export const AppLayout = ({
   avaliableTokens,
   posts: postsFromSSR,
   postId,
+  postCreated,
 }) => {
   const { user } = useUser()
 
@@ -20,7 +21,13 @@ export const AppLayout = ({
 
   useEffect(() => {
     setPostsFromSSR(postsFromSSR)
-  }, [postsFromSSR, setPostsFromSSR])
+    if (postId) {
+      const exists = postsFromSSR.find((post) => post._id === postId)
+      if (!exists) {
+        getPosts({ lastPostDate: postCreated, getNewerPosts: true })
+      }
+    }
+  }, [postsFromSSR, setPostsFromSSR, postCreated, getPosts, postId])
 
   return (
     <div>
