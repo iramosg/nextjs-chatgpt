@@ -15,10 +15,13 @@ export default function TokenTopUp() {
     window.location.href = json.session.url
   }
   return (
-    <div>
-      <button className="btn" onClick={handleClick}>
-        Add tokens
-      </button>
+    <div className="w-full h-full flex flex-col overflow-auto">
+      <div className="m-auto w-full max-w-screen-sm bg-slate-100 p-4 roudend-md shadow-xl border border-slate-200 shadow-slate-200 text-center">
+        <h1>Buy new tokens</h1>
+        <button className="btn" onClick={handleClick}>
+          Add tokens
+        </button>
+      </div>
     </div>
   )
 }
