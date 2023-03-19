@@ -6,9 +6,20 @@ export default PostsContext
 
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = React.useState([])
+  const [noMorePosts, setNoMorePosts] = React.useState(false)
 
   const setPostsFromSSR = useCallback((postsFromSSR = []) => {
-    setPosts(postsFromSSR)
+    // setPosts(postsFromSSR)
+    setPosts((value) => {
+      const newPosts = [...value]
+      postsFromSSR.forEach((post) => {
+        const exists = newPosts.find((p) => p._id === post._id)
+        if (!exists) {
+          newPosts.push(post)
+        }
+      })
+      return newPosts
+    })
   }, [])
 
   const getPosts = useCallback(async ({ lastPostDate }) => {
@@ -24,8 +35,10 @@ export const PostsProvider = ({ children }) => {
 
     const json = await result.json()
     const postsResult = json.posts || []
-    console.log(postsResult)
 
+    if (postsResult.length < 5) {
+      setNoMorePosts(true)
+    }
     setPosts((value) => {
       const newPosts = [...value]
       postsResult.forEach((post) => {
@@ -39,7 +52,9 @@ export const PostsProvider = ({ children }) => {
   }, [])
 
   return (
-    <PostsContext.Provider value={{ posts, setPostsFromSSR, getPosts }}>
+    <PostsContext.Provider
+      value={{ posts, setPostsFromSSR, getPosts, noMorePosts }}
+    >
       {children}
     </PostsContext.Provider>
   )
