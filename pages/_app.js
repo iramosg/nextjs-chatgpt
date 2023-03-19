@@ -3,6 +3,7 @@ import { DM_Sans, DM_Serif_Display } from '@next/font/google'
 import '../styles/globals.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
+import { PostsProvider } from '../context/postsContext'
 config.autoAddCss = false
 
 const dmSans = DM_Sans({
@@ -22,11 +23,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <UserProvider>
-      <main
-        className={`${dmSans.variable} ${dmSerifDisplay.variable} font-body`}
-      >
-        {getLayout(<Component {...pageProps} />, pageProps)}
-      </main>
+      <PostsProvider>
+        <main
+          className={`${dmSans.variable} ${dmSerifDisplay.variable} font-body`}
+        >
+          {getLayout(<Component {...pageProps} />, pageProps)}
+        </main>
+      </PostsProvider>
     </UserProvider>
   )
 }
